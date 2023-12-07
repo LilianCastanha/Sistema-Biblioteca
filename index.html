@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+</head>
+
+<body>
+
+    <h1>Biblioteca</h1>
+
+    <button onclick="adicionarUsuario()">Adicionar Usuário</button>
+    <button onclick="adicionarItem()">Adicionar Item</button>
+    <button onclick="emprestarItem()">Emprestar Item</button>
+    <button onclick="devolverItem()">Devolver Item</button>
+    <button onclick="listarAcervo()">Listar Acervo</button>
+
+
+    <script>
+
+        function adicionarUsuario() {
+            const nome = prompt("Digite o nome do usuário:");
+            const registroAcademico = prompt("Digite o registro acadêmico do usuário:");
+            const dataNascimento = prompt("Digite a data de nascimento do usuário (formato: YYYY-MM-DD):");
+
+            const usuario = new Usuario(nome, registroAcademico, dataNascimento);
+            biblioteca.adicionarUsuario(usuario);
+
+            console.log("Usuário registrado com sucesso!");
+        }
+
+        function adicionarItem() {
+            const titulo = prompt("Digite o título:");
+            const autor = prompt("Digite o autor:");
+            const anoPublicacao = prompt("Digite o ano de publicação:");
+            const codigo = prompt("Digite o código:");
+
+            const tipoItem = prompt("Digite o tipo de item (Livro ou Revista):").toLowerCase();
+
+            if (tipoItem === 'livro') {
+                const genero = prompt("Digite o gênero do livro:");
+                const item = new Livro(titulo, autor, anoPublicacao, codigo, genero);
+                biblioteca.adicionarItem(item);
+                alert("Livro adicionado com sucesso!");
+            } else if (tipoItem === 'revista') {
+                const edicao = prompt("Digite a edição da revista:");
+                const item = new Revista(titulo, autor, anoPublicacao, codigo, false, null, edicao);
+                biblioteca.adicionarItem(item);
+                alert("Revista adicionada com sucesso!");
+            } else {
+                alert("Tipo de item inválido. Use 'Livro' ou 'Revista'.");
+            }
+
+        }
+
+        function emprestarItem() {
+            const codigo = prompt("Digite o código do item:");
+            const registroAcademico = prompt("Digite o registro acadêmico do usuário:");
+            biblioteca.emprestarItem(codigo, registroAcademico);
+            listarAcervo();
+            alert("Item emprestado com sucesso!");
+        }
+
+        function devolverItem() {
+            const codigo = prompt("Digite o código do item:");
+            const registroAcademico = prompt("Digite o registro acadêmico do usuário:");
+            biblioteca.devolverItem(codigo, registroAcademico);
+            listarAcervo();
+            alert("Item devolvido com sucesso!");
+        }
+
+        function listarAcervo() {
+            console.log("Acervo da Biblioteca:");
+            biblioteca.listarAcervo();
+        }
+
+    </script>
+    <script src="biblioteca.js"></script>
+</body>
+
+</html>
